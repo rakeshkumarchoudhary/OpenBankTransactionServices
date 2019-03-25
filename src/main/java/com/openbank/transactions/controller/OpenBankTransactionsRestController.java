@@ -18,17 +18,27 @@ import com.openbank.transactions.service.IOpenBankTransactionsService;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 
+ * @author Rakesh
+ *
+ */
 @RestController
 @Slf4j
 public class OpenBankTransactionsRestController 
 {
-
+	
 	@Autowired
 	IOpenBankTransactionsService openBankService;
 	
 	@Autowired
 	ObjectMapper mapper;
 	
+	/**
+	 * 
+	 * @return
+	 * @throws JsonProcessingException
+	 */
 	@RequestMapping(value = "/allTransactions", method = RequestMethod.GET,headers="Accept=application/json")
 	public ResponseEntity<String> getAllTransactions() throws JsonProcessingException
 	{
@@ -41,6 +51,12 @@ public class OpenBankTransactionsRestController
 		
 	}
 	
+	/**
+	 * 
+	 * @param transType
+	 * @return
+	 * @throws JsonProcessingException
+	 */
 	@RequestMapping(value = "/allTransactionsforTransType/{transType}", method = RequestMethod.GET,headers="Accept=application/json")
 	public ResponseEntity<String> getAllTransactionsforTransType(@PathVariable String transType) 
 			throws JsonProcessingException

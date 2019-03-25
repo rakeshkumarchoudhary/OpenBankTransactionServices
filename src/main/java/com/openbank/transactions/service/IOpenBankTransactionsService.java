@@ -4,6 +4,11 @@ import java.util.List;
 
 import com.openbank.transactions.model.OpenBankTransactionBO;
 
+/**
+ * 
+ * @author Rakesh
+ *
+ */
 public interface IOpenBankTransactionsService {
 
 	/**

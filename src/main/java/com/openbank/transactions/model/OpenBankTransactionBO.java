@@ -1,16 +1,12 @@
 package com.openbank.transactions.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
-@ToString
-@Setter
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class OpenBankTransactionBO {
 
 	private String id;

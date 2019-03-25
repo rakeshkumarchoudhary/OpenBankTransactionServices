@@ -16,12 +16,21 @@ import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
-
+/**
+ * 
+ * @author Rakesh
+ *
+ */
 @Configuration
 @EnableSwagger2
 @EnableWebMvc
-public class SwaggerConfig extends WebMvcConfigurerAdapter{                                    
-    @Bean
+public class SwaggerConfig extends WebMvcConfigurerAdapter
+{                                    
+    /**
+     * 
+     * @return
+     */
+	@Bean
     public Docket api() { 
     	//Adding Header
         ParameterBuilder aParameterBuilder = new ParameterBuilder();
@@ -42,6 +51,9 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter{
                                                       .globalOperationParameters(aParameters);                                           
     }
     
+	/**
+	 * 
+	 */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("swagger-ui.html")

@@ -11,6 +11,11 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import com.openbank.transactions.beanconfiguration.OpenBankTransactionsBeanConfig;
 import com.openbank.transactions.model.OpenBankTransactionBO;
 
+/**
+ * 
+ * @author Rakesh
+ *
+ */
 public class OpenBankTransactionsUtil 
 {
 

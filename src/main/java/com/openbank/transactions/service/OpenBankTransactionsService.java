@@ -12,6 +12,11 @@ import com.openbank.transactions.util.OpenBankTransactionsUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * 
+ * @author Rakesh
+ *
+ */
 @Service
 @Slf4j
 public class OpenBankTransactionsService implements IOpenBankTransactionsService {

@@ -8,10 +8,20 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.openbank.transactions.exception.TransactionNotFoundException;
 
+/**
+ * 
+ * @author Rakesh
+ *
+ */
 @ControllerAdvice
 @EnableWebMvc
 public class OpenBankTransactionsExceptionController{
 	
+	/**
+	 * 
+	 * @param exception
+	 * @return
+	 */
 	@ExceptionHandler(value = TransactionNotFoundException.class) 
 	public ResponseEntity<String> exception(TransactionNotFoundException exception) { 
 	  return new ResponseEntity<String>(new String("Transaction not found"), HttpStatus.NOT_FOUND); 
