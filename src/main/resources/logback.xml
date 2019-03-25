@@ -1,52 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-    <configuration>
-    	<appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
-    		<encoder>
-    			<Pattern>.%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg %n
-    			</Pattern>
-    		</encoder>
-    		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-    			<level>TRACE</level>
-    		</filter>
-    	</appender>
+<configuration scan="true" scanPeriod="30 seconds">
+	<contextName>OpenBankTransactionServices</contextName>
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>OpenBankTransactionServices.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- daily rollover -->
+            <fileNamePattern>OpenBankTransactionServices-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <!-- keep 30 days' worth of history -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
 
-      	<appender name="dailyRollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    		<File>openbank-transactions.log</File>
-    		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-    		    <!-- daily rollover -->
-    			<FileNamePattern>openbank-transactions.%d{yyyy-MM-dd}.log</FileNamePattern>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
 
-    			<!-- keep 30 days' worth of history -->
-    			<maxHistory>30</maxHistory>			
-    		</rollingPolicy>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%contextName: %d{HH:mm:ss.SSS} [%thread] %level %logger - %msg%n</pattern>
+        </encoder>
+    </appender>
 
-    		<encoder>
-    			<Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg %n</Pattern>
-    		</encoder> 	    
-      	</appender>
-      	<appender name="minuteRollingFileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-    		    <!-- rollover every minute -->
-    			<FileNamePattern>openbank-transactions-minute.%d{yyyy-MM-dd_HH-mm}.log</FileNamePattern>
+    <root level="INFO">
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
 
-    			<!-- keep 30 minutes' worth of history -->
-    			<maxHistory>30</maxHistory>			
-    		</rollingPolicy>
+    <logger name="org.projectlombok">
+        <level value="INFO"/>
+    </logger>
 
-    		<encoder>
-    			<Pattern>%-4relative [%thread] %-5level %logger{35} - %msg %n</Pattern>
-    		</encoder> 	    
-      	</appender>  	
-
-    	<logger name="org.codingpedia" additivity="false">
-    	    <level value="INFO" />
-    		<appender-ref ref="dailyRollingFileAppender"/>
-    		<appender-ref ref="minuteRollingFileAppender"/>
-    		<appender-ref ref="consoleAppender" />
-    	</logger>
-
-    	<root>
-    		<level value="INFO" />
-    		<appender-ref ref="consoleAppender" />
-    	</root>
-    </configuration>
+</configuration>
