@@ -57,7 +57,7 @@ public class OpenBankTransactionsRestControllerTest {
 	
 	@Test
 	public void testGetTotalTransactionAmountforTransType() throws Exception {
-	    MvcResult mvcResult = this.mockMvc.perform(MockMvcRequestBuilders.get("/totalAmountforTransType/sandbox-payment").accept(MediaType.APPLICATION_JSON)).andReturn();
+	    MvcResult mvcResult = this.mockMvc.perform(MockMvcRequestBuilders.get("/totalAmountforTransType/SANDBOX_TAN").accept(MediaType.APPLICATION_JSON)).andReturn();
 	    assertTrue(mvcResult.getResponse().getStatus() == 200);       
 	      
 	}

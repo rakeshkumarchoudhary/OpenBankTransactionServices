@@ -44,7 +44,7 @@ public class OpenBankTransactionsUtilTest
 	public void testGetJSONObjectFromJSONStringForTransType()
 	{
 		
-		List<OpenBankTransactionBO> transBOList = testUtil.getJSONObjectFromJSONString(jsonString, transType);
+		List<OpenBankTransactionBO> transBOList = testUtil.getJSONObjectFromJSONStringforTransType(jsonString, transType);
 		assertTrue(transBOList.size()>0);
 	}
 }

@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.openbank.transactions.model.OpenBankTransactionBO;
 
@@ -21,7 +20,7 @@ import com.openbank.transactions.model.OpenBankTransactionBO;
 public class OpenBankTransactionsServiceTest {
 
 	@Autowired
-	OpenBankTransactionsService openBankTransactionsService;
+	OpenBankTransactionsServiceImpl openBankTransactionsService;
 	
 	@Autowired
 	RestTemplate restTemplate;

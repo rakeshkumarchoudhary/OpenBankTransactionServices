@@ -11,11 +11,14 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import com.openbank.transactions.beanconfiguration.OpenBankTransactionsBeanConfig;
 import com.openbank.transactions.model.OpenBankTransactionBO;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 
  * @author Rakesh
  *
  */
+@Slf4j
 public class OpenBankTransactionsUtil 
 {
 
@@ -29,17 +32,18 @@ public class OpenBankTransactionsUtil
 	 */
 	public static List<OpenBankTransactionBO> getJSONObjectFromJSONString(String jsonStr)
 	{
+		log.info("Entering method getJSONObjectFromJSONString ....");
 		List<OpenBankTransactionBO> transBOList = new ArrayList<OpenBankTransactionBO>();
 		JSONObject jsonObj = new JSONObject(jsonStr);		
 		JSONArray jsonArr = jsonObj.getJSONArray("transactions");
 		
-		for(int transactionIndex=0;transactionIndex<jsonArr.length();++transactionIndex)
-		{
+		jsonArr.forEach(n -> {			
 			OpenBankTransactionBO transBO = ctx.getBean(OpenBankTransactionBO.class);
-			mappingToOpenBankTransactionsBO(jsonArr, transactionIndex, transBO);
-			
+			mappingToOpenBankTransactionsBO(new JSONObject(n.toString()), transBO);
 			transBOList.add(transBO);
-		}
+		});
+
+		log.info("Exiting method getJSONObjectFromJSONString ....");
 		return transBOList;
 		
 		
@@ -51,26 +55,24 @@ public class OpenBankTransactionsUtil
 	 * @param transType
 	 * @return
 	 */
-	public static List<OpenBankTransactionBO> getJSONObjectFromJSONString(String jsonStr, String transType)
+	public static List<OpenBankTransactionBO> getJSONObjectFromJSONStringforTransType(String jsonStr, String transType)
 	{
+		log.info("Entering method getJSONObjectFromJSONStringforTransType ....");
 		List<OpenBankTransactionBO> transBOList = new ArrayList<OpenBankTransactionBO>();
 		
 		JSONObject jsonObj = new JSONObject(jsonStr);		
 		JSONArray jsonArr = jsonObj.getJSONArray("transactions");
-		
-		for(int transactionIndex=0;transactionIndex<jsonArr.length();++transactionIndex)
-		{
-			if(transType.equals(jsonArr.getJSONObject(transactionIndex).getJSONObject("details").optString("type")))
+		jsonArr.forEach(n -> {
+			if( transType.equals( new JSONObject(n.toString()).getJSONObject("details").optString("type"))) 
 			{
 				OpenBankTransactionBO transBO = ctx.getBean(OpenBankTransactionBO.class);
-				mappingToOpenBankTransactionsBO(jsonArr, transactionIndex, transBO);
-				
+				mappingToOpenBankTransactionsBO(new JSONObject(n.toString()), transBO);
 				transBOList.add(transBO);
 			}
-		}
+		});
 		
+		log.info("Exiting method getJSONObjectFromJSONStringforTransType ....");
 		return transBOList;
-		
 		
 	}
 	
@@ -81,23 +83,22 @@ public class OpenBankTransactionsUtil
 	 * @param transactionIndex
 	 * @param transBO
 	 */
-	private static void mappingToOpenBankTransactionsBO(JSONArray jsonArr, int transactionIndex,
+	private static void mappingToOpenBankTransactionsBO(JSONObject jsonObject,
 			OpenBankTransactionBO transBO) {
 		
-		transBO.setId(jsonArr.getJSONObject(transactionIndex).optString("id"));
-		transBO.setAccountId(jsonArr.getJSONObject(transactionIndex).getJSONObject("this_account").optString("id"));
-		transBO.setCounterpartyAccount(jsonArr.getJSONObject(transactionIndex).getJSONObject("other_account").optString("number"));
-		transBO.setCounterpartyName(jsonArr.getJSONObject(transactionIndex).getJSONObject("other_account").getJSONObject("holder").optString("name"));
-		transBO.setCounterPartyLogoPath(jsonArr.getJSONObject(transactionIndex).getJSONObject("other_account").getJSONObject("metadata").optString("image_URL"));
-		String amount= jsonArr.getJSONObject(transactionIndex).getJSONObject("details").getJSONObject("value").optString("amount");
-		String currency= jsonArr.getJSONObject(transactionIndex).getJSONObject("details").getJSONObject("value").optString("currency");
+		transBO.setId(jsonObject.optString("id"));
+		transBO.setAccountId(jsonObject.getJSONObject("this_account").optString("id"));
+		transBO.setCounterpartyAccount(jsonObject.getJSONObject("other_account").optString("number"));
+		transBO.setCounterpartyName(jsonObject.getJSONObject("other_account").getJSONObject("holder").optString("name"));
+		transBO.setCounterPartyLogoPath(jsonObject.getJSONObject("other_account").getJSONObject("metadata").optString("image_URL"));
+		String amount= jsonObject.getJSONObject("details").getJSONObject("value").optString("amount");
+		String currency= jsonObject.getJSONObject("details").getJSONObject("value").optString("currency");
 		transBO.setInstructedAmount(new Double(amount));
 		transBO.setInstructedCurrency(currency);
 		transBO.setTransactionAmount(new Double(amount));
 		transBO.setTransactionCurrency(currency);
-		transBO.setTransactionType(jsonArr.getJSONObject(transactionIndex).getJSONObject("details").optString("type"));
-		transBO.setDescription(jsonArr.getJSONObject(transactionIndex).getJSONObject("details").optString("description"));
-		
+		transBO.setTransactionType(jsonObject.getJSONObject("details").optString("type"));
+		transBO.setDescription(jsonObject.getJSONObject("details").optString("description"));
 	}
 
 

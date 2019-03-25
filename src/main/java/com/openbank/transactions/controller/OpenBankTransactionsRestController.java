@@ -47,6 +47,7 @@ public class OpenBankTransactionsRestController
 		if(transBOList.isEmpty())
 			throw new TransactionNotFoundException();
 		String jsonString = mapper.writeValueAsString(transBOList);
+		log.info("Exiting method getAllTransactions ....");
 		return new ResponseEntity<String>(jsonString, HttpStatus.OK);	
 		
 	}
@@ -66,6 +67,7 @@ public class OpenBankTransactionsRestController
 		if(transBOList.isEmpty())
 			throw new TransactionNotFoundException();
 		String jsonString = mapper.writeValueAsString(transBOList);
+		log.info("Exiting method getAllTransactionsforTransType .... ");
 		return new ResponseEntity<String>(jsonString, HttpStatus.OK);	
 		
 	}
@@ -79,6 +81,7 @@ public class OpenBankTransactionsRestController
 		if(transBOList.isEmpty())
 			throw new TransactionNotFoundException();
 		totalTransactionAmount = new Double(transBOList.stream().mapToDouble(n -> n.getTransactionAmount()).sum()).toString();
+		log.info("Exiting method getTotalTransactionAmountforTransType ....");
 		return new ResponseEntity<String>(totalTransactionAmount, HttpStatus.OK);	
 		
 	}

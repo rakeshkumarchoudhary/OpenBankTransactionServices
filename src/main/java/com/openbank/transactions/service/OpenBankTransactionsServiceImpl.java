@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Service
 @Slf4j
-public class OpenBankTransactionsService implements IOpenBankTransactionsService {
+public class OpenBankTransactionsServiceImpl implements IOpenBankTransactionsService {
 	
 	@Autowired
 	RestTemplate restTemplate;
@@ -39,7 +39,8 @@ public class OpenBankTransactionsService implements IOpenBankTransactionsService
 	{
 		log.info("Entering method getAllOpenBankSandboxTransactions ....");
 		log.info("OpenBank Sandbox Transactions URI = "+ baseURL.concat(resourcePath));
-		String result = restTemplate.getForObject(baseURL.concat(resourcePath), String.class);		
+		String result = restTemplate.getForObject(baseURL.concat(resourcePath), String.class);	
+		log.info("Exiting method getAllOpenBankSandboxTransactions ....");
 		return OpenBankTransactionsUtil.getJSONObjectFromJSONString(result);
 	}
 	
@@ -52,8 +53,9 @@ public class OpenBankTransactionsService implements IOpenBankTransactionsService
 	{
 		log.info("Entering method getOpenBankSandboxTransactionsforTransType ...."+transType);
 		log.info("OpenBank Sandbox Transactions URI = "+ baseURL.concat(resourcePath));
-		String result = restTemplate.getForObject(baseURL.concat(resourcePath), String.class);		
-		return OpenBankTransactionsUtil.getJSONObjectFromJSONString(result, transType);
+		String result = restTemplate.getForObject(baseURL.concat(resourcePath), String.class);
+		log.info("Exiting method getOpenBankSandboxTransactionsforTransType ....");
+		return OpenBankTransactionsUtil.getJSONObjectFromJSONStringforTransType(result, transType);
 	}
 
 
