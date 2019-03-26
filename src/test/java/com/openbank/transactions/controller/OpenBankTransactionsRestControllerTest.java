@@ -57,7 +57,7 @@ public class OpenBankTransactionsRestControllerTest {
 	@Test
 	public void testTransactionNotFound() throws Exception {
 	    MvcResult mvcResult = this.mockMvc.perform(MockMvcRequestBuilders.get("/allTransactionsforTransType/sandbox-payment1234").accept(MediaType.APPLICATION_JSON)).andReturn();
-	    assertTrue(mvcResult.getResponse().getStatus() == 204);	       
+	    assertTrue(mvcResult.getResponse().getStatus() == 404);	       
 	      
 	}
 

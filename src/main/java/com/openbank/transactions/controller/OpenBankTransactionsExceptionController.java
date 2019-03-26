@@ -25,7 +25,7 @@ public class OpenBankTransactionsExceptionController{
 	 */
 	@ExceptionHandler(value = TransactionNotFoundException.class) 
 	public ResponseEntity<String> exception(TransactionNotFoundException exp) { 
-	  return new ResponseEntity<String>("Error Code:"+exp.getErrorCode()+"	Error Message:"+exp.getErrorMessage(), HttpStatus.NO_CONTENT); 
+	  return new ResponseEntity<String>("Error Message: "+exp.getErrorMessage(), HttpStatus.NOT_FOUND); 
 	 }
 	
 	
@@ -36,7 +36,7 @@ public class OpenBankTransactionsExceptionController{
 	 */
 	@ExceptionHandler(value = OpenBankSandboxRestEndPointException.class) 
 	public ResponseEntity<String> openBankSandboxException(OpenBankSandboxRestEndPointException exp) { 
-	  return new ResponseEntity<String>("Error Code:"+exp.getErrorCode()+"	Error Message:"+exp.getErrorMessage(), HttpStatus.NOT_FOUND); 
+	  return new ResponseEntity<String>("Error Message: "+exp.getErrorMessage(), HttpStatus.NOT_FOUND); 
 	 }
 
 
