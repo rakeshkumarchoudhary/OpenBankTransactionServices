@@ -15,7 +15,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TransactionNotFoundException extends RuntimeException { 
+public class OpenBankSandboxRestEndPointException extends RuntimeException { 
 	 private static final long serialVersionUID = 1L; 
 	 
 	 private String errorCode;

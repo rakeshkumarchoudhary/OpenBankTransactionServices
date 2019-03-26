@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import com.openbank.transactions.exception.OpenBankSandboxRestEndPointException;
 import com.openbank.transactions.exception.TransactionNotFoundException;
 
 /**
@@ -19,12 +20,24 @@ public class OpenBankTransactionsExceptionController{
 	
 	/**
 	 * 
-	 * @param exception
+	 * @param exp
 	 * @return
 	 */
 	@ExceptionHandler(value = TransactionNotFoundException.class) 
-	public ResponseEntity<String> exception(TransactionNotFoundException exception) { 
-	  return new ResponseEntity<String>(new String("Transaction not found"), HttpStatus.NOT_FOUND); 
+	public ResponseEntity<String> exception(TransactionNotFoundException exp) { 
+	  return new ResponseEntity<String>("Error Code:"+exp.getErrorCode()+"	Error Message:"+exp.getErrorMessage(), HttpStatus.NO_CONTENT); 
 	 }
+	
+	
+	/**
+	 * 
+	 * @param exp
+	 * @return
+	 */
+	@ExceptionHandler(value = OpenBankSandboxRestEndPointException.class) 
+	public ResponseEntity<String> openBankSandboxException(OpenBankSandboxRestEndPointException exp) { 
+	  return new ResponseEntity<String>("Error Code:"+exp.getErrorCode()+"	Error Message:"+exp.getErrorMessage(), HttpStatus.NOT_FOUND); 
+	 }
+
 
 }

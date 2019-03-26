@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.openbank.transactions.exception.OpenBankSandboxRestEndPointException;
 import com.openbank.transactions.model.OpenBankTransactionBO;
 import com.openbank.transactions.util.OpenBankTransactionsUtil;
 
@@ -39,7 +41,15 @@ public class OpenBankTransactionsServiceImpl implements IOpenBankTransactionsSer
 	{
 		log.info("Entering method getAllOpenBankSandboxTransactions ....");
 		log.info("OpenBank Sandbox Transactions URI = "+ baseURL.concat(resourcePath));
-		String result = restTemplate.getForObject(baseURL.concat(resourcePath), String.class);	
+		String result = "";
+		try
+		{
+			result = restTemplate.getForObject(baseURL.concat(resourcePath), String.class);	
+		}
+		catch(Exception exp)
+		{
+			throw new OpenBankSandboxRestEndPointException(HttpStatus.NOT_FOUND.toString(), "Issue with OpenBank Sandbox Rest service URI");
+		}
 		log.info("Exiting method getAllOpenBankSandboxTransactions ....");
 		return OpenBankTransactionsUtil.getJSONObjectFromJSONString(result);
 	}
@@ -53,7 +63,16 @@ public class OpenBankTransactionsServiceImpl implements IOpenBankTransactionsSer
 	{
 		log.info("Entering method getOpenBankSandboxTransactionsforTransType ...."+transType);
 		log.info("OpenBank Sandbox Transactions URI = "+ baseURL.concat(resourcePath));
-		String result = restTemplate.getForObject(baseURL.concat(resourcePath), String.class);
+		String result = "";
+		try
+		{
+			result = restTemplate.getForObject(baseURL.concat(resourcePath), String.class);	
+		}
+		catch(Exception exp)
+		{
+			throw new OpenBankSandboxRestEndPointException(HttpStatus.NOT_FOUND.toString(),"Issue with OpenBank Sandbox Rest service URI");
+		}
+
 		log.info("Exiting method getOpenBankSandboxTransactionsforTransType ....");
 		return OpenBankTransactionsUtil.getJSONObjectFromJSONStringforTransType(result, transType);
 	}

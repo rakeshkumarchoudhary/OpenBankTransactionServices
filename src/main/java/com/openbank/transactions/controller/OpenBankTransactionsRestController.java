@@ -45,7 +45,7 @@ public class OpenBankTransactionsRestController
 		log.info("Entering method getAllTransactions ....");
 		List<OpenBankTransactionBO> transBOList = openBankService.getAllOpenBankSandboxTransactions();
 		if(transBOList.isEmpty())
-			throw new TransactionNotFoundException();
+			throw new TransactionNotFoundException(HttpStatus.NO_CONTENT.toString(),"Transaction not found");
 		String jsonString = mapper.writeValueAsString(transBOList);
 		log.info("Exiting method getAllTransactions ....");
 		return new ResponseEntity<String>(jsonString, HttpStatus.OK);	
@@ -65,7 +65,7 @@ public class OpenBankTransactionsRestController
 		log.info("Entering method getAllTransactionsforTransType .... "+transType);
 		List<OpenBankTransactionBO> transBOList = openBankService.getOpenBankSandboxTransactionsforTransType(transType);
 		if(transBOList.isEmpty())
-			throw new TransactionNotFoundException();
+			throw new TransactionNotFoundException(HttpStatus.NO_CONTENT.toString(),"Transaction not found");
 		String jsonString = mapper.writeValueAsString(transBOList);
 		log.info("Exiting method getAllTransactionsforTransType .... ");
 		return new ResponseEntity<String>(jsonString, HttpStatus.OK);	
@@ -79,7 +79,7 @@ public class OpenBankTransactionsRestController
 		String totalTransactionAmount="0.0";
 		List<OpenBankTransactionBO> transBOList = openBankService.getOpenBankSandboxTransactionsforTransType(transType);
 		if(transBOList.isEmpty())
-			throw new TransactionNotFoundException();
+			throw new TransactionNotFoundException(HttpStatus.NO_CONTENT.toString(),"Transaction not found");
 		totalTransactionAmount = new Double(transBOList.stream().mapToDouble(n -> n.getTransactionAmount()).sum()).toString();
 		log.info("Exiting method getTotalTransactionAmountforTransType ....");
 		return new ResponseEntity<String>(totalTransactionAmount, HttpStatus.OK);	
